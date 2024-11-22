@@ -17,14 +17,14 @@ from opencensus.trace.tracer import Tracer
 from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 
 
-app_insights_conn_string = 'InstrumentationKey=c61f6d08-9c63-4a7e-801e-b1aa6b07182b;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=bd318394-554f-4448-a058-58a6243c3a3f'
+app_insights_conn_string = 'InstrumentationKey=c61f6d08-9c63-4a7e-801e-b1aa6b07182b'
 
 # Logging
 # TODO: Setup logger
 logger = logging.getLogger(__name__)
 logger.addHandler(AzureLogHandler(connection_string=app_insights_conn_string))
 logger.addHandler(AzureEventHandler(connection_string=app_insights_conn_string))
-
+logger.setLevel(logging.INFO)
 
 # Metrics
 # TODO: Setup exporter
