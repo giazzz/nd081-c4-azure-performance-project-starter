@@ -22,8 +22,16 @@ app_insights_conn_string = 'InstrumentationKey=11f82a44-a404-4049-9231-5cf227597
 # Logging
 # TODO: Setup logger
 logger = logging.getLogger(__name__)
-logger.addHandler(AzureLogHandler(connection_string=app_insights_conn_string))
-logger.addHandler(AzureEventHandler(connection_string=app_insights_conn_string))
+logger.addHandler(AzureLogHandler(
+  connection_string="InstrumentationKey=11f82a44-a404-4049-9231-5cf22759749b;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/"
+  )
+)
+logger.addHandler(
+  AzureEventHandler(
+    connection_string="InstrumentationKey=11f82a44-a404-4049-9231-5cf22759749b;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/"
+  )
+)
+
 logger.setLevel(logging.INFO)
 
 # Metrics
