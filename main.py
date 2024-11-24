@@ -24,7 +24,7 @@ from opencensus.tags import tag_map as tag_map_module
 from opencensus.trace import config_integration
 
 
-app_insights_conn_string = 'InstrumentationKey=906ef0dd-a215-49d2-b8d9-8646738a285b'
+app_insights_conn_string = 'InstrumentationKey=1e5cb7af-c52a-4a82-a163-23cd08fe7b2a'
 
 config_integration.trace_integrations(['logging'])
 config_integration.trace_integrations(['requests'])
