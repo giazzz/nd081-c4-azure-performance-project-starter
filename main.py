@@ -24,7 +24,7 @@ from opencensus.tags import tag_map as tag_map_module
 from opencensus.trace import config_integration
 
 
-app_insights_conn_string = 'InstrumentationKey=1e5cb7af-c52a-4a82-a163-23cd08fe7b2a'
+app_insights_conn_string = 'InstrumentationKey=e99a74a1-fed9-403d-b230-18f8b291aeeb'
 
 config_integration.trace_integrations(['logging'])
 config_integration.trace_integrations(['requests'])
@@ -81,21 +81,21 @@ else:
 
 # Comment/remove the next two lines of code.
 # Redis Connection to a local server running on the same machine where the current FLask app is running. 
-r = redis.Redis()
+# r = redis.Redis()
 # Redis configurations
-# redis_server = os.environ['REDIS']
+redis_server = os.environ['REDIS']
 
-# # Redis Connection to another container
-# try:
-#   if "REDIS_PWD" in os.environ:
-#       r = redis.StrictRedis(host=redis_server,
-#                         port=6379,
-#                         password=os.environ['REDIS_PWD'])
-#   else:
-#       r = redis.Redis(redis_server)
-#   r.ping()
-# except redis.ConnectionError:
-#   exit('Failed to connect to Redis, terminating.')
+# Redis Connection to another container
+try:
+  if "REDIS_PWD" in os.environ:
+      r = redis.StrictRedis(host=redis_server,
+                        port=6379,
+                        password=os.environ['REDIS_PWD'])
+  else:
+      r = redis.Redis(redis_server)
+  r.ping()
+except redis.ConnectionError:
+  exit('Failed to connect to Redis, terminating.')
   
 
 # Change title to host name to demo NLB
@@ -136,13 +136,13 @@ def index():
             properties = {'custom_dimensions': {'Cats Vote': vote1}}
 
             # TODO: use logger object to log cat vote
-            logger.info(f"{button1} Vote")
+            logger.error(f"{button1} Vote")
 
             vote2 = r.get(button2).decode('utf-8')
             properties = {'custom_dimensions': {'Dogs Vote': vote2}}
 
             # TODO: use logger object to log dog vote
-            logger.info(f"{button2} Vote")
+            logger.error(f"{button2} Vote")
 
             return render_template("index.html", value1=int(vote1), value2=int(vote2), button1=button1, button2=button2, title=title)
 
@@ -154,16 +154,16 @@ def index():
 
             # Get current values
             vote1 = r.get(button1).decode('utf-8')
-            logger.info(f"{button1} Vote")
+            logger.error(f"{button1} Vote")
 
             vote2 = r.get(button2).decode('utf-8')
-            logger.info(f"{button2} Vote")
+            logger.error(f"{button2} Vote")
 
             # Return results
             return render_template("index.html", value1=int(vote1), value2=int(vote2), button1=button1, button2=button2, title=title)
 
 if __name__ == "__main__":
     # TODO: Use the statement below when running locally
-    app.run()
+    # app.run()
     # TODO: Use the statement below before deployment to VMSS
-    # app.run(host='0.0.0.0', threaded=True, debug=True) # remote
+    app.run(host='0.0.0.0', threaded=True, debug=True) # remote
