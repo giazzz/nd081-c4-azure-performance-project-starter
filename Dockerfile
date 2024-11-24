@@ -15,4 +15,3 @@ ADD . /app
 
 # Install depndencies 
 RUN pip install -r /app/requirements.txt
-RUN pip install --upgrade certifi
